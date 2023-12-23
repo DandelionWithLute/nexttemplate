@@ -1,3 +1,33 @@
+signIn("credentials", {
+      email,
+      password,
+    });
+
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+  const { data, mutate, error, isLoading } = useSWR(
+    `/api/posts?username=${session?.data?.user.name}`,
+    fetcher
+  );
+
+todo:
+authjs authorize
+
+http://localhost:3000/dashboard/login?error=Error:%20Illegal%20arguments:%20string,%20undefined
+
+
+docker run --rm -p 5432:5432 -e POSTGRES_HOST_AUTH_METHOD=trust postgres
+@\app\api\auth\[...nextauth]\route.js
+const handler = NextAuth({})
+try to find user
+if(user)try catch (check password correct? return user : user not found!)
+
+<input>: The Input (Form Input) element
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
+
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

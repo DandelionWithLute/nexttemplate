@@ -29,27 +29,10 @@ const Login = ({ url }) => {
     e.preventDefault();
     const email = e.target[0].value;
     const password = e.target[1].value;
-
-    // const user = await res.data
-
-    const res = await fetch("http://localhost:3000/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // authorization: "Bearer " + user.accessToken
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
+    signIn("credentials", {
+      email,
+      password,
     });
-
-    const data = await res.json();
-    console.log(data.name + " loginpage");
-    const { name, accessToken, refreshToken } = data;
-    localStorage.setItem("name", `${name}`);
-    localStorage.setItem("accessToken", `${accessToken}`);
-    localStorage.setItem("refreshToken", `${refreshToken}`);
 
     // const res = await fetch("http://localhost:3000/api/auth/login");
 
@@ -78,7 +61,7 @@ const Login = ({ url }) => {
           required
           className={styles.input}
         />
-        <button className={styles.button}>Login</button>
+        <button type="submit" className={styles.button}>Login</button>
         {error && error}
       </form>
       <button
