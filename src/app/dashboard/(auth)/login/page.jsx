@@ -17,6 +17,10 @@ const Login = ({ url }) => {
     setSuccess(params.get("success"));
   }, [params]);
 
+  // if(success){
+  //   session.status="authenticated"
+  // }
+
   if (session.status === "loading") {
     return <p>Loading...</p>;
   }
@@ -33,12 +37,14 @@ const Login = ({ url }) => {
       email,
       password,
     });
+    // console.log(user.name, session);
 
     // const res = await fetch("http://localhost:3000/api/auth/login");
+    // const { user, session } = await res.json();
 
-    // const data = res.json()
+    // // const data = res.json()
     // if (res.ok) {
-    //   console.log(data);
+    //   console.log(user.name, session);
     // }
     // const data = res.body;
   };
@@ -61,7 +67,9 @@ const Login = ({ url }) => {
           required
           className={styles.input}
         />
-        <button type="submit" className={styles.button}>Login</button>
+        <button type="submit" className={styles.button}>
+          Login
+        </button>
         {error && error}
       </form>
       <button

@@ -2,24 +2,22 @@ import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@auth/prisma-adapter";
+// import { PrismaAdapter } from "@auth/prisma-adapter";
 import bcrypt from "bcryptjs";
 import prisma from "@/utils/connect";
 
 const handler = NextAuth({
-  adapter: PrismaAdapter(prisma),
+  // adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
       id: "credentials",
       name: "Credentials",
       async authorize(credentials) {
         //Check if the user exists.
-
         try {
           const user = await prisma.user.findUnique({
             where: { email: credentials.email },
           });
-          
 
           if (user) {
             const isPasswordCorrect = await bcrypt.compare(
