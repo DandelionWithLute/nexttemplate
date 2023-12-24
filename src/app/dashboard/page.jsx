@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 const Dashboard = () => {
-
   //OLD WAY TO FETCH DATA
 
   // const [data, setData] = useState([]);
@@ -36,7 +35,7 @@ const Dashboard = () => {
   const session = useSession();
 
   const router = useRouter();
-  
+
   //NEW WAY TO FETCH DATA
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -52,6 +51,14 @@ const Dashboard = () => {
   if (session.status === "unauthenticated") {
     router?.push("/dashboard/login");
   }
+
+  const slugify = (str) =>
+    str
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/[\s_-]+/g, "-")
+      .replace(/^-+|-+$/g, "");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -69,10 +76,11 @@ const Dashboard = () => {
           img,
           content,
           username: session.data.user.name,
+          slug: slugify(title),
         }),
       });
       mutate();
-      e.target.reset()
+      e.target.reset();
     } catch (err) {
       console.log(err);
     }
@@ -90,20 +98,21 @@ const Dashboard = () => {
   };
 
   if (session.status === "authenticated") {
+    console.log(session.data);
     return (
       <div className={styles.container}>
         <div className={styles.posts}>
           {isLoading
             ? "loading"
             : data?.map((post) => (
-                <div className={styles.post} key={post._id}>
+                <div className={styles.post} key={post.id}>
                   <div className={styles.imgContainer}>
                     <Image src={post.img} alt="" width={200} height={100} />
                   </div>
                   <h2 className={styles.postTitle}>{post.title}</h2>
                   <span
                     className={styles.delete}
-                    onClick={() => handleDelete(post._id)}
+                    onClick={() => handleDelete(post.id)}
                   >
                     X
                   </span>
