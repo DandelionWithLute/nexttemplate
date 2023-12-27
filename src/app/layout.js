@@ -20,9 +20,13 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <ThemeContextProvider>
             <ThemeProvider>
-              <Navbar />
-              {children}
-              <Footer />
+              <div className="container">
+                <div className="wrapper">
+                  <Navbar />
+                  {children}
+                  <Footer />
+                </div>
+              </div>
             </ThemeProvider>
           </ThemeContextProvider>
         </AuthProvider>

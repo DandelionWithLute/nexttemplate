@@ -1,21 +1,18 @@
-import prisma from "@/utils/connect";
 import { getServerSession } from "next-auth";
+import prisma from "@/utils/connect";
 import { NextResponse } from "next/server";
 
 export const GET = async (req) => {
   const { searchParams } = new URL(req.url);
 
   const page = searchParams.get("page");
-  // if(!searchParams.get("page")){
-  //   page = 1
-  // }
   const cat = searchParams.get("cat");
 
-  const POST_PER_PAGE = 3;
+  const POST_PER_PAGE = 2;
 
   const query = {
     take: POST_PER_PAGE,
-    skip: POST_PER_PAGE * (page ? 0 : 1 - 1),
+    skip: POST_PER_PAGE * (page - 1),
     where: {
       ...(cat && { catSlug: cat }),
     },
@@ -54,6 +51,7 @@ export const GET = async (req) => {
 // CREATE A POST
 export const POST = async (req) => {
   const session = await getServerSession();
+  
 
   if (!session) {
     return new NextResponse(
@@ -63,8 +61,13 @@ export const POST = async (req) => {
 
   try {
     const body = await req.json();
+    console.log("body next:")
+    console.log(body)
+    console.log(session.user.email)
+    const Email = session.user.email
+    const validEmail = Email.toLowerCase()
     const post = await prisma.post.create({
-      data: { ...body, userEmail: session.user.email },
+      data: { ...body, userEmail: validEmail },
     });
 
     return new NextResponse(JSON.stringify(post, { status: 200 }));

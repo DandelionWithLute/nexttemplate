@@ -1,3 +1,26 @@
+const Email = session.user.email
+    const validEmail = Email.toLowerCase()
+
+
+const post = await prisma.post.create({
+      data: {
+        slug: "fashion",
+        title: "fashiontitle",
+        desc: "fashiondesc",
+        catSlug: "fashioncatSlug",
+        userEmail: "john@gmail.com",
+      },
+
+
+
+try {
+    const body = await req.json();
+    const { title, desc, img, slug, catSlug } = body;
+    const post = await prisma.post.create({
+      data: { ...body, userEmail: session.user.email },
+    });
+
+
 import authLinks navbar footer 
 context/ThemeContext.jsx themeToggle
 featured categoryList card cardList
