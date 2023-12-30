@@ -1,3 +1,7 @@
+  const { searchParams } = new URL(req.url);
+  const { slug } = params;
+
+
 const Email = session.user.email
     const validEmail = Email.toLowerCase()
 
